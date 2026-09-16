@@ -180,10 +180,13 @@
     board.innerHTML = "";
     const stages = visibleStages();
     const tasks = filteredTasks();
+    // hard dedupe by id at render time — belt & braces against any state glitch
+    const seenIds = new Set();
+    const uniqTasks = tasks.filter((t) => !seenIds.has(t.id) && seenIds.add(t.id));
 
     stages.forEach((stage) => {
       const key = stage.name.toLowerCase();
-      const colTasks = tasks.filter((t) => String(t.status).toLowerCase() === key)
+      const colTasks = uniqTasks.filter((t) => String(t.status).toLowerCase() === key)
         .sort((a, b) => a.position - b.position);
       const col = document.createElement("div");
       col.className = "col";
