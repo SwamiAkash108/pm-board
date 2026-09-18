@@ -38,8 +38,8 @@
   };
   const visibleProjects = () => state.projects.filter((p) => !projHidden(p.id));
   // Areas = roles/departments. Project.area, default 'Knowledge & Academy'.
-  const AREAS = ["Knowledge & Academy", "Prem AI", "Board of Appointed Swamis", "Board of Directors", "Personal"];
-  const AREA_COLORS = { "Knowledge & Academy": "#c9912f", "Prem AI": "#6b4f8f", "Board of Appointed Swamis": "#6b7040", "Board of Directors": "#2b4361", "Personal": "#a05b8f" };
+  const AREAS = ["Guruji", "Knowledge & Academy", "Prem AI", "Board of Appointed Swamis", "Board of Directors", "Personal"];
+  const AREA_COLORS = { "Guruji": "#b3352c", "Knowledge & Academy": "#c9912f", "Prem AI": "#6b4f8f", "Board of Appointed Swamis": "#6b7040", "Board of Directors": "#2b4361", "Personal": "#a05b8f" };
   const projArea = (p) => p.area || "Knowledge & Academy";
   const areaProjects = () => visibleProjects().filter((p) => state.activeArea === "all" || projArea(p) === state.activeArea);
   const projOutOfArea = (pid) => {
