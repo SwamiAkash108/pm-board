@@ -33,7 +33,7 @@
 html,body{height:100%}
 body{
   background:var(--canvas); color:var(--text); font-family:var(--font-ui);
-  font-size:14px; line-height:1.45; overscroll-behavior:none;
+  font-size:16.5px; line-height:1.5; overscroll-behavior:none;
   -webkit-font-smoothing:antialiased;
   -webkit-tap-highlight-color:transparent;
 }
@@ -64,7 +64,7 @@ body{
 }
 .area-chips::-webkit-scrollbar{display:none}
 .area-chip{
-  padding:6px 13px; font-size:11px; min-height:30px; border-width:2px;
+  padding:6px 13px; font-size:13px; min-height:32px; border-width:2px;
   background:transparent; box-shadow:none; opacity:.85;
 }
 .area-chip.active{background:var(--chip-color,var(--ink)); border-color:var(--chip-color,var(--ink)); color:var(--cream); opacity:1}
@@ -76,7 +76,7 @@ body{
 .project-chips::-webkit-scrollbar{display:none}
 .chip{
   flex-shrink:0; padding:9px 16px; font-family:var(--font-ui); font-weight:700;
-  font-size:12.5px; letter-spacing:.02em; min-height:38px;
+  font-size:14.5px; letter-spacing:.02em; min-height:40px;
   background:var(--cream); border:2.5px solid var(--ink); color:var(--ink);
   border-radius:999px; cursor:pointer; transition:all .12s ease; user-select:none;
   box-shadow:3px 3px 0 rgba(23,17,11,.5);
@@ -117,7 +117,7 @@ body{
 .col-head{display:flex; align-items:center; gap:9px; padding:2px 2px 12px; border-bottom:2px solid var(--ink); margin-bottom:12px}
 .col-dot{width:12px; height:12px; border-radius:50%; flex-shrink:0; border:2px solid var(--ink)}
 .col-name{
-  font-family:var(--font-anton); font-size:14px; text-transform:uppercase;
+  font-family:var(--font-anton); font-size:16px; text-transform:uppercase;
   letter-spacing:.06em; color:var(--ink);
 }
 .col-count{
@@ -140,10 +140,10 @@ body{
 .card:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 rgba(23,17,11,.9)}
 .card.dragging{opacity:.35; cursor:grabbing}
 .card-ghost{border:2px dashed var(--ink); border-radius:4px; height:52px}
-.card-title{font-family:var(--font-head); font-weight:600; font-size:16px; line-height:1.3}
+.card-title{font-family:var(--font-head); font-weight:600; font-size:18px; line-height:1.35}
 .card-meta{display:flex; align-items:center; gap:7px; margin-top:10px; flex-wrap:wrap}
 .badge{
-  font-family:var(--font-ui); font-weight:700; font-size:10.5px; padding:3px 8px;
+  font-family:var(--font-ui); font-weight:700; font-size:12px; padding:3px 8px;
   border:2px solid var(--ink); border-radius:3px;
   text-transform:uppercase; letter-spacing:.04em; background:var(--cream);
 }
@@ -152,7 +152,7 @@ body{
 .badge-due.over{background:var(--red); color:var(--cream)}
 .badge-pri3{color:var(--red); border-color:var(--red); background:transparent; font-weight:700}
 .badge-pri1{color:var(--faint); border-color:var(--line2); background:transparent}
-.card-proj{font-family:var(--font-ui); font-weight:700; font-size:10px; color:var(--faint); margin-left:auto; text-transform:uppercase; letter-spacing:.04em}
+.card-proj{font-family:var(--font-ui); font-weight:700; font-size:12.5px; color:var(--faint); margin-left:auto; text-transform:uppercase; letter-spacing:.04em}
 .add-task{
   margin-top:11px; width:100%; padding:12px; border-radius:4px; min-height:44px;
   background:transparent; border:2.5px dashed var(--line2); color:var(--ink2);
@@ -201,7 +201,7 @@ body{
 .list-row{
   display:grid; align-items:center; gap:10px;
   grid-template-columns:minmax(140px,1fr) 150px 130px 84px 40px;
-  padding:11px 15px; border-bottom:2px solid var(--line); font-size:14px;
+  padding:12px 15px; border-bottom:2px solid var(--line); font-size:16px;
 }
 .list-row:last-child{border-bottom:none}
 .list-row.list-head{
@@ -211,7 +211,7 @@ body{
 }
 .list-row:not(.list-head):hover{background:var(--cream2)}
 .list-row.is-done .lc-title{text-decoration:line-through; opacity:.5}
-.lc-title{font-family:var(--font-head); font-weight:600; font-size:15.5px; cursor:pointer; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.lc-title{font-family:var(--font-head); font-weight:600; font-size:17px; cursor:pointer; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
 .lc-title:hover{color:var(--red)}
 .lc-proj{display:flex; align-items:center; gap:7px; font-family:var(--font-ui); font-weight:600; font-size:11.5px; color:var(--ink2); min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis}
 .lc-proj i{width:10px; height:10px; border-radius:50%; flex-shrink:0; border:1.5px solid var(--ink)}
@@ -499,7 +499,7 @@ body{
 .sync-item:hover .sync-title{text-decoration:underline dotted}
 .sync-item-main{display:flex; flex-direction:column; gap:2px}
 .sync-proj{font-family:var(--font-ui); font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em}
-.sync-title{font-family:var(--font-head); font-weight:600; font-size:14.5px; color:var(--ink)}
+.sync-title{font-family:var(--font-head); font-weight:600; font-size:17px; color:var(--ink)}
 .sync-meta{display:flex; gap:12px; flex-wrap:wrap; margin-top:3px; font-family:var(--font-ui); font-size:11px; font-weight:600; color:var(--faint)}
 .sync-why{text-transform:uppercase; letter-spacing:.1em; color:var(--accent); font-size:9.5px; font-weight:800; align-self:center}
 .sync-due.hot{color:var(--accent)}
@@ -551,7 +551,7 @@ body{
 
 /* ---------- today view ---------- */
 #today-wrap{max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:26px}
-.today-sec-title{font-family:var(--font-head); font-size:20px; margin:0 0 12px; display:flex; align-items:center; gap:10px; color:var(--cream)}
+.today-sec-title{font-family:var(--font-head); font-size:24px; margin:0 0 12px; display:flex; align-items:center; gap:10px; color:var(--cream)}
 .today-sec-title .col-count{background:var(--cream); color:var(--ink)}
 .today-row{
   display:flex; align-items:center; gap:12px; padding:12px 16px; margin-bottom:8px;
@@ -562,7 +562,7 @@ body{
 .today-due{font-family:var(--font-type); font-size:12px; min-width:64px; color:var(--ink2)}
 .today-due.over{color:#c0392b; font-weight:700}
 .today-due.soon{color:var(--gold, #d9a13b); font-weight:700}
-.today-title{font-family:var(--font-head); font-size:15.5px; flex:1}
+.today-title{font-family:var(--font-head); font-size:17.5px; flex:1}
 .today-proj{font-size:12px; color:var(--ink2); display:flex; align-items:center; gap:5px}
 .today-proj i{width:9px; height:9px; border-radius:50%; display:inline-block}
 .today-stage{font-size:11px; border:1.5px solid; border-radius:99px; padding:2px 9px; color:var(--ink2)}
@@ -613,8 +613,8 @@ body{
   min-height:56px; padding:0 24px; gap:16px; flex-wrap:nowrap;
 }
 .brand-icon{border:0; box-shadow:none; background:transparent; border-radius:4px; filter:brightness(0) invert(1)}
-.brand-name{color:#fff; text-transform:none; letter-spacing:-.02em; font-size:18px; font-weight:800}
-.brand-sub{color:#CBD5E1; font-family:var(--font-ui); opacity:1; font-size:12px; font-weight:500}
+.brand-name{color:#fff; text-transform:none; letter-spacing:-.02em; font-size:22px; font-weight:800}
+.brand-sub{color:#CBD5E1; font-family:var(--font-ui); opacity:1; font-size:14px; font-weight:500}
 .icon-btn{
   background:transparent; border:0; color:#CBD5E1; border-radius:4px;
   box-shadow:none; width:36px; height:36px;
@@ -636,7 +636,7 @@ body{
   flex:0 0 auto; width:auto; min-height:44px; flex-direction:row; gap:6px;
   padding:0 12px; border-radius:0; border:0; border-bottom:2px solid transparent;
   background:transparent; color:var(--text-secondary);
-  text-transform:none; letter-spacing:0; font-size:13px; font-weight:600;
+  text-transform:none; letter-spacing:0; font-size:15.5px; font-weight:600;
 }
 .tab .tab-ico{font-family:"Material Symbols Outlined"; font-size:18px}
 .tab:hover{color:var(--text)}
@@ -647,7 +647,7 @@ body{
 }
 .chip.active,.area-chip.active{background:rgba(46,66,165,.1); color:var(--accent); border-color:var(--accent)}
 .who-chip.active{background:var(--navy); color:#fff; box-shadow:none}
-.view-title{color:var(--text); text-transform:none; letter-spacing:-.02em; font-size:22px; font-weight:800}
+.view-title{color:var(--text); text-transform:none; letter-spacing:-.02em; font-size:32px; font-weight:800}
 .view-title em{color:var(--accent); font-style:normal; text-transform:none; font-family:var(--font-ui)}
 .col,.card,.panel,.list-table,.tl-wrap,.modal,.login-card,.today-row,.uns-item,.upd,.ctx-menu{
   border-width:1px; border-color:var(--border); box-shadow:var(--shadow); border-radius:8px; background:#fff;
@@ -675,6 +675,6 @@ body{
     background:var(--navy); border-bottom:0;
     padding-bottom:calc(6px + env(safe-area-inset-bottom));
   }
-  .tab{color:#CBD5E1; flex-direction:column; min-width:72px; font-size:10px; border-bottom:0}
+  .tab{color:#CBD5E1; flex-direction:column; min-width:76px; font-size:12px; border-bottom:0}
   .tab.active{color:#fff; box-shadow:inset 0 2px 0 #fff}
 }

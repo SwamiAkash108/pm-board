@@ -1,4 +1,4 @@
-const CACHE = "akasha-v27";
+const CACHE = "akasha-v28";
 const SHELL = ["./", "index.html", "styles.css", "app.js", "db.js", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "bm-logo-black.png", "bm-logo.png", "bm-mark.png"];
 
 self.addEventListener("install", (e) => {
