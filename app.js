@@ -678,23 +678,37 @@
   }
 
   function syncItem(t, why) {
-    const p = projOf(t);
     const ppl = peopleOf(t).map((x) => esc(x.name)).join(", ");
     const due = t.due ? (t.due < todayStr() ? "overdue " + fmtDate(t.due) : t.due === todayStr() ? "due today" : "due " + fmtDate(t.due)) : "";
     return `<article class="sync-item" data-tid="${t.id}">
-      <div class="sync-item-main">
-        <span class="sync-proj">${esc(p ? p.name : "")}</span>
-        <button type="button" class="sync-title">${esc(t.title)}</button>
-      </div>
+      <button type="button" class="sync-title">${esc(t.title)}</button>
       <div class="sync-meta">${why && why !== "overdue" && why !== "blocked" ? `<span class="sync-why">${esc(why)}</span>` : ""}${ppl ? `<span>${ppl}</span>` : ""}${due ? `<span class="sync-due ${t.due && t.due <= todayStr() ? "hot" : ""}">${due}</span>` : ""}</div>
       <div class="sync-actions">
-        <div class="sync-status">
-          <span class="sync-status-label">Move</span>
-          <div class="sync-stages" role="group" aria-label="Move">${syncStages(t)}</div>
-        </div>
+        <div class="sync-stages" role="group" aria-label="Move">${syncStages(t)}</div>
         <button type="button" class="sync-complete" data-stage="${escAttr(doneStageName(t))}">Complete</button>
       </div>
     </article>`;
+  }
+
+  function syncGroups(items, why) {
+    const sorted = [...items].sort((a, b) => {
+      const pa = (projOf(a) && projOf(a).name || "").toLowerCase();
+      const pb = (projOf(b) && projOf(b).name || "").toLowerCase();
+      if (pa !== pb) return pa < pb ? -1 : 1;
+      return (a.due || "9999") < (b.due || "9999") ? -1 : 1;
+    });
+    const groups = [];
+    sorted.forEach((t) => {
+      const name = (projOf(t) && projOf(t).name) || "No project";
+      const last = groups[groups.length - 1];
+      if (!last || last.name !== name) groups.push({ name, items: [t] });
+      else last.items.push(t);
+    });
+    return groups.map((g) => `
+      <div class="sync-group">
+        <h4 class="sync-proj">${esc(g.name)}</h4>
+        ${g.items.map((t) => syncItem(t, why && why(t))).join("")}
+      </div>`).join("");
   }
 
   function syncText() {
@@ -723,12 +737,12 @@
     const inTxt = ds === today && hrs <= 12 ? ` · in ${hrs}h` : "";
     const { blockers, decisions, commitments } = syncData();
 
-    const panel = (cls, n, title, sub, items, why) => `
-      <div class="panel sync-panel ${cls}">
+    const section = (cls, n, title, sub, items, why) => `
+      <section class="sync-sec ${cls}">
         <h3>${n}. ${title} <span class="sync-count">${items.length}</span></h3>
         <p class="sync-sub">${sub}</p>
-        ${items.length ? items.map((t) => syncItem(t, why && why(t))).join("") : `<p class="sync-empty">all clear</p>`}
-      </div>`;
+        ${items.length ? syncGroups(items, why) : `<p class="sync-empty">all clear</p>`}
+      </section>`;
 
     wrap.innerHTML = `
       <div class="sync-grid">
@@ -741,9 +755,11 @@
           </div>
           <button id="sync-copy" class="btn-accent sync-copybtn">Copy agenda</button>
         </div>
-        ${panel("sync-block", 1, "Blockers", "what is stuck or overdue, unstick it in the room", blockers, (t) => (t.due && t.due < todayStr() ? "overdue" : "blocked"))}
-        ${panel("sync-dec", 2, "Decisions", "what needs a yes or a no, decide, do not drift", decisions)}
-        ${panel("sync-commit sync-commitfull", 3, "Commitments", "in flight right now, confirm owners and dates out loud", commitments)}
+        <div class="panel sync-agenda">
+          ${section("sync-block", 1, "Blockers", "what is stuck or overdue, unstick it in the room", blockers, (t) => (t.due && t.due < todayStr() ? "overdue" : "blocked"))}
+          ${section("sync-dec", 2, "Decisions", "what needs a yes or a no, decide, do not drift", decisions)}
+          ${section("sync-commit", 3, "Commitments", "in flight right now, confirm owners and dates out loud", commitments)}
+        </div>
         <p class="sync-foot">built live from the board · voice-note Fluso after the meeting and the board gets updated</p>
       </div>`;
 
