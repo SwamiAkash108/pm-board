@@ -12,17 +12,26 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script>
+  if (localStorage.getItem("pm_theme") === "jlf") document.documentElement.classList.add("theme-jlf");
+</script>
 </head>
 <body>
 
 <header id="topbar">
   <div class="brand">
     <img src="bm-logo-black.png" alt="Bhakti Marga emblem" class="brand-icon" width="38" height="38">
+    <span class="mark" aria-hidden="true">JLF</span>
     <div class="brand-text">
       <span class="brand-name">PM Board</span>
       <span class="brand-sub">field logbook · est. 2026</span>
     </div>
+  </div>
+  <div class="theme-switch" role="group" aria-label="Which board">
+    <button type="button" id="theme-personal" aria-pressed="true">Personal</button>
+    <button type="button" id="theme-jlf" aria-pressed="false">JLF</button>
   </div>
   <div id="area-chips" class="area-chips"></div>
   <div id="project-chips" class="project-chips"></div>
@@ -102,7 +111,7 @@
 <!-- Login -->
 <div id="login" class="login hidden">
   <div class="login-card">
-    <img src="icon-192.png" alt="" class="login-icon">
+    <img src="bm-mark.png" alt="Bhakti Marga" class="login-icon">
     <h2>PM Board</h2>
     <p class="muted">field logbook · sign in to your board</p>
     <input id="login-email" type="email" placeholder="Email" autocomplete="email">

@@ -1,5 +1,5 @@
-const CACHE = "akasha-v23";
-const SHELL = ["./", "index.html", "styles.css", "app.js", "db.js", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "bm-logo-black.png"];
+const CACHE = "akasha-v26";
+const SHELL = ["./", "index.html", "styles.css", "app.js", "db.js", "config.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "bm-logo-black.png", "bm-logo.png", "bm-mark.png"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));

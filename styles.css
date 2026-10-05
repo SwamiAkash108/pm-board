@@ -439,7 +439,7 @@ body::after{
   width:100%; max-width:360px; background:var(--cream); border:3px solid var(--ink);
   border-radius:6px; padding:40px 34px; text-align:center; box-shadow:8px 8px 0 rgba(23,17,11,.9);
 }
-.login-icon{width:80px; height:80px; border-radius:12px; margin-bottom:20px; border:3px solid var(--ink); box-shadow:3px 3px 0 rgba(23,17,11,.4); background:var(--cream)}
+.login-icon{width:112px; max-height:22vh; height:auto; margin-bottom:12px; border:0; box-shadow:none; background:transparent; border-radius:0; object-fit:contain}
 .login-card h2{font-family:var(--font-display); font-weight:400; text-transform:uppercase; letter-spacing:.03em; margin-bottom:5px; font-size:26px}
 .login-card .muted{font-family:var(--font-type); font-size:12px; margin-bottom:28px}
 .login-card input{
@@ -456,9 +456,10 @@ body::after{
   /* topbar becomes two rows: brand+actions, then a full-width chip rail */
   #topbar{flex-wrap:wrap; gap:9px 10px; padding:10px 12px; padding-top:calc(10px + env(safe-area-inset-top))}
   .brand{order:1}
-  #btn-people{order:2; margin-left:auto}
-  #btn-add-project{order:3}
-  #btn-refresh{order:4}
+  .theme-switch{order:2; margin-left:auto}
+  #btn-people{order:3; margin-left:0}
+  #btn-add-project{order:4}
+  #btn-refresh{order:5}
   #project-chips{order:5; flex:1 1 100%; min-width:0; padding:2px 2px 5px}
   #area-chips{order:6}
   .brand-sub{display:none}
@@ -617,3 +618,79 @@ body::after{
 .ctx-item:hover{background:var(--ink); color:var(--cream)}
 .ctx-item.ctx-danger{color:#c0392b}
 .ctx-item.ctx-danger:hover{background:#c0392b; color:var(--cream)}
+
+/* Board switch. Personal stays the poster. JLF uses justlovefestival.org. */
+.mark{display:none}
+.theme-switch{
+  display:inline-flex; padding:3px; gap:2px; border-radius:999px;
+  background:var(--cream); border:2.5px solid var(--ink);
+  box-shadow:3px 3px 0 rgba(23,17,11,.5); flex-shrink:0;
+}
+.theme-switch button{
+  border:0; background:transparent; color:var(--ink); cursor:pointer;
+  font-family:var(--font-ui); font-weight:800; font-size:11px; letter-spacing:.04em;
+  border-radius:999px; padding:6px 10px; min-height:28px;
+}
+.theme-switch button[aria-pressed="true"]{background:var(--ink); color:var(--cream)}
+
+html.theme-jlf{
+  --red:#FF7FD4; --red-deep:#F06BC4; --red-dark:#E23B6A;
+  --cream:#FFFFFF; --cream2:#FFF6F8;
+  --ink:#3D2448; --ink2:#7A5C72; --faint:#A8889A;
+  --gold:#FF9E69; --olive:#3DAA7A; --navy:#3D2448;
+  --line:#F3D5E4; --line2:#E8C4D4;
+  --shadow:0 2px 8px rgba(61,36,72,.08);
+  --shadow-sm:0 1px 2px rgba(61,36,72,.06);
+  --font-display:'Avenir Next','Nunito Sans',system-ui,sans-serif;
+  --font-anton:'Avenir Next','Nunito Sans',system-ui,sans-serif;
+  --font-head:'Avenir Next','Nunito Sans',system-ui,sans-serif;
+  --font-type:'JetBrains Mono',ui-monospace,monospace;
+  --font-ui:'Avenir Next','Nunito Sans',system-ui,sans-serif;
+  --c-todo:#C9A8B8; --c-doing:#FF9E69; --c-blocked:#E23B6A; --c-done:#3DAA7A;
+}
+html.theme-jlf body{background:#FFF6F8; color:#3D2448}
+html.theme-jlf body::after{display:none}
+html.theme-jlf .brand-icon{display:none}
+html.theme-jlf .mark{
+  display:grid; place-items:center; width:36px; height:36px; border-radius:8px;
+  background:rgba(255,255,255,.22); color:#fff; font-weight:800; font-size:12px; letter-spacing:.04em;
+  border:0; box-shadow:none;
+}
+html.theme-jlf #topbar{
+  background:linear-gradient(90deg,#FF7FD4 0%,#FF9E69 100%);
+  border-bottom:0;
+}
+html.theme-jlf .brand-name,
+html.theme-jlf .brand-sub{color:#fff; opacity:1}
+html.theme-jlf .brand-name{text-transform:none; letter-spacing:-.02em; font-size:18px}
+html.theme-jlf .brand-sub{font-family:var(--font-ui); font-size:12px}
+html.theme-jlf .icon-btn{
+  background:rgba(255,255,255,.22); border:0; color:#fff; box-shadow:none;
+}
+html.theme-jlf .icon-btn:hover{background:rgba(255,255,255,.34); transform:none; box-shadow:none}
+html.theme-jlf .theme-switch{background:rgba(255,255,255,.22); border:0; box-shadow:none}
+html.theme-jlf .theme-switch button{color:#fff}
+html.theme-jlf .theme-switch button[aria-pressed="true"]{background:#fff; color:#E23B6A}
+html.theme-jlf .chip,
+html.theme-jlf .area-chip,
+html.theme-jlf .who-chip{box-shadow:none; border-width:1px}
+html.theme-jlf .chip.active,
+html.theme-jlf .area-chip.active,
+html.theme-jlf .who-chip.active{background:#fff; color:#E23B6A; border-color:#fff}
+html.theme-jlf .view-title{text-transform:none; letter-spacing:-.02em; font-size:28px}
+html.theme-jlf .view-title em{color:#E23B6A; font-style:normal; text-transform:none}
+html.theme-jlf .empty-hint,
+html.theme-jlf .hide-done,
+html.theme-jlf .tl-hidetoggle,
+html.theme-jlf .today-sec-title{color:#7A5C72}
+html.theme-jlf .today-sec-title .col-count{background:#FFF0F6; color:#3D2448}
+html.theme-jlf #tabbar{background:#fff; border-color:#F3D5E4}
+html.theme-jlf .tab{color:#7A5C72}
+html.theme-jlf .tab.active{background:#FF7FD4; color:#fff; border-color:#FF7FD4}
+html.theme-jlf #fab{background:linear-gradient(90deg,#FF7FD4,#FF9E69); color:#fff; border:0}
+html.theme-jlf .login{background:linear-gradient(90deg,#FF7FD4 0%,#FF9E69 100%)}
+html.theme-jlf .login-card{box-shadow:0 16px 40px rgba(61,36,72,.16); border-color:#F3D5E4}
+html.theme-jlf .btn-accent,
+html.theme-jlf .login-card .btn-accent{background:#FF7FD4; border-color:#FF7FD4; color:#fff; box-shadow:none}
+html.theme-jlf .btn-accent:hover,
+html.theme-jlf .login-card .btn-accent:hover{background:#F06BC4; border-color:#F06BC4}
