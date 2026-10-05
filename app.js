@@ -653,17 +653,48 @@
     return { blockers, decisions, commitments };
   }
 
+  function stageKind(name) {
+    const k = String(name || "").toLowerCase();
+    if (k.includes("block")) return "blocked";
+    if (isDoneStage(name)) return "done";
+    if (k.includes("doing") || k.includes("progress") || k === "wip") return "doing";
+    return "todo";
+  }
+
+  function doneStageName(t) {
+    const cols = colsForProject(t.project_id);
+    const stages = cols.length ? cols : visibleStages();
+    const done = stages.find((s) => isDoneStage(s.name));
+    return done ? done.name : "Done";
+  }
+
+  function syncStages(t) {
+    const cols = colsForProject(t.project_id);
+    const stages = (cols.length ? cols : visibleStages()).filter((s) => !isDoneStage(s.name));
+    return stages.map((s) => {
+      const on = String(t.status).toLowerCase() === s.name.toLowerCase();
+      return `<button type="button" class="sync-stage${on ? " on" : ""}" data-kind="${stageKind(s.name)}" data-stage="${escAttr(s.name)}" aria-pressed="${on ? "true" : "false"}">${esc(s.name)}</button>`;
+    }).join("");
+  }
+
   function syncItem(t, why) {
     const p = projOf(t);
     const ppl = peopleOf(t).map((x) => esc(x.name)).join(", ");
     const due = t.due ? (t.due < todayStr() ? "overdue " + fmtDate(t.due) : t.due === todayStr() ? "due today" : "due " + fmtDate(t.due)) : "";
-    return `<div class="sync-item" data-tid="${t.id}">
+    return `<article class="sync-item" data-tid="${t.id}">
       <div class="sync-item-main">
-        <span class="sync-proj" style="color:${p ? p.color || "var(--accent)" : "var(--accent)"}">${esc(p ? p.name : "")}</span>
-        <span class="sync-title">${esc(t.title)}</span>
+        <span class="sync-proj">${esc(p ? p.name : "")}</span>
+        <button type="button" class="sync-title">${esc(t.title)}</button>
       </div>
-      <div class="sync-meta">${why ? `<span class="sync-why">${esc(why)}</span>` : ""}${ppl ? `<span>${ppl}</span>` : ""}${due ? `<span class="sync-due ${t.due && t.due <= todayStr() ? "hot" : ""}">${due}</span>` : ""}</div>
-    </div>`;
+      <div class="sync-meta">${why && why !== "overdue" && why !== "blocked" ? `<span class="sync-why">${esc(why)}</span>` : ""}${ppl ? `<span>${ppl}</span>` : ""}${due ? `<span class="sync-due ${t.due && t.due <= todayStr() ? "hot" : ""}">${due}</span>` : ""}</div>
+      <div class="sync-actions">
+        <div class="sync-status">
+          <span class="sync-status-label">Move</span>
+          <div class="sync-stages" role="group" aria-label="Move">${syncStages(t)}</div>
+        </div>
+        <button type="button" class="sync-complete" data-stage="${escAttr(doneStageName(t))}">Complete</button>
+      </div>
+    </article>`;
   }
 
   function syncText() {
@@ -706,6 +737,7 @@
             <h3>Next sync</h3>
             <p class="sync-next">${rel} · ${SYNC_H}.${String(SYNC_M).padStart(2, "0")}${inTxt}</p>
             <p class="sync-sub">every Tuesday, Thursday, Saturday · 25 min · blockers → decisions → commitments</p>
+            <p class="sync-hint">Complete finishes the task and takes it off this list. The other buttons only move it.</p>
           </div>
           <button id="sync-copy" class="btn-accent sync-copybtn">Copy agenda</button>
         </div>
@@ -728,10 +760,33 @@
       }
       setTimeout(() => (btn.textContent = "Copy agenda"), 1600);
     };
-    $$(".sync-item", wrap).forEach((el) => {
+    $$(".sync-title", wrap).forEach((el) => {
       el.onclick = () => {
-        const t = byId(state.tasks, el.dataset.tid);
+        const t = byId(state.tasks, el.closest(".sync-item").dataset.tid);
         if (t) openTaskModal(t);
+      };
+    });
+    $$(".sync-stage", wrap).forEach((btn) => {
+      btn.onclick = async () => {
+        if (btn.classList.contains("on") || btn.disabled) return;
+        const row = btn.closest(".sync-item");
+        const t = byId(state.tasks, row.dataset.tid);
+        if (!t) return;
+        $$(".sync-stage, .sync-complete", row).forEach((b) => { b.disabled = true; });
+        await setTaskStatus(t, btn.dataset.stage);
+        renderSync();
+      };
+    });
+    $$(".sync-complete", wrap).forEach((btn) => {
+      btn.onclick = async () => {
+        if (btn.disabled) return;
+        const row = btn.closest(".sync-item");
+        const t = byId(state.tasks, row.dataset.tid);
+        if (!t) return;
+        btn.disabled = true;
+        $$(".sync-stage", row).forEach((b) => { b.disabled = true; });
+        await setTaskStatus(t, btn.dataset.stage);
+        renderSync();
       };
     });
   }

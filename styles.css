@@ -494,15 +494,44 @@ body{
 .sync-copybtn{white-space:nowrap}
 .sync-count{font-family:var(--font-ui); font-size:11px; font-weight:800; background:var(--ink); color:var(--cream); border-radius:20px; padding:3px 9px; vertical-align:middle; margin-left:6px; letter-spacing:0}
 .sync-block .sync-count{background:var(--accent)}
-.sync-item{border-top:1.5px dashed rgba(30,26,19,.25); padding:10px 2px; cursor:pointer}
+.sync-hint{font-size:15px; color:var(--text-secondary); margin:0; font-weight:500; line-height:1.4}
+.sync-item{border-top:1px solid var(--border); padding:16px 0; cursor:default}
 .sync-item:first-of-type{border-top:none}
-.sync-item:hover .sync-title{text-decoration:underline dotted}
 .sync-item-main{display:flex; flex-direction:column; gap:2px}
-.sync-proj{font-family:var(--font-ui); font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.14em}
-.sync-title{font-family:var(--font-head); font-weight:600; font-size:17px; color:var(--ink)}
-.sync-meta{display:flex; gap:12px; flex-wrap:wrap; margin-top:3px; font-family:var(--font-ui); font-size:11px; font-weight:600; color:var(--faint)}
-.sync-why{text-transform:uppercase; letter-spacing:.1em; color:var(--accent); font-size:9.5px; font-weight:800; align-self:center}
-.sync-due.hot{color:var(--accent)}
+.sync-proj{font-family:var(--font-ui); font-size:13px; font-weight:600; color:var(--text-secondary)}
+.sync-title{
+  appearance:none; background:none; border:0; padding:0; margin:0;
+  text-align:left; cursor:pointer; font-family:var(--font-head); font-weight:600;
+  font-size:17px; color:var(--ink); letter-spacing:0;
+}
+.sync-title:hover{text-decoration:underline}
+.sync-meta{display:flex; gap:8px; flex-wrap:wrap; margin-top:6px; font-family:var(--font-ui); font-size:14px; font-weight:500; color:var(--text-secondary)}
+.sync-why{color:var(--c-blocked); font-size:13px; font-weight:700; align-self:center}
+.sync-due.hot{color:var(--c-blocked); font-weight:700}
+.sync-actions{display:flex; align-items:flex-end; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap}
+.sync-status{display:flex; flex-direction:column; gap:6px; margin-top:0; flex:1}
+.sync-status-label{font-size:12px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--text-secondary)}
+.sync-stages{display:flex; flex-wrap:wrap; gap:6px}
+.sync-stage{
+  appearance:none; border:1px solid var(--border); background:#fff; color:var(--text);
+  border-radius:980px; padding:8px 14px; min-height:36px; font:inherit; font-size:14px;
+  font-weight:600; cursor:pointer; line-height:1;
+}
+.sync-stage:hover{background:var(--canvas)}
+.sync-stage:active{transform:scale(.97)}
+.sync-stage:disabled{opacity:.55; cursor:default}
+.sync-stage.on{background:var(--ink); border-color:var(--ink); color:#fff}
+.sync-stage.on[data-kind="doing"]{background:var(--accent); border-color:var(--accent)}
+.sync-stage.on[data-kind="blocked"]{background:var(--c-blocked); border-color:var(--c-blocked)}
+.sync-stage.on[data-kind="done"]{background:var(--c-done); border-color:var(--c-done)}
+.sync-complete{
+  appearance:none; border:0; background:var(--c-done); color:#fff; border-radius:980px;
+  min-height:44px; padding:0 18px; font:inherit; font-size:15px; font-weight:700;
+  cursor:pointer; flex:0 0 auto; letter-spacing:0;
+}
+.sync-complete:hover{filter:brightness(1.05)}
+.sync-complete:active{transform:scale(.97)}
+.sync-complete:disabled{opacity:.55; cursor:default}
 .sync-empty{font-family:var(--font-display); font-style:italic; font-size:17px; color:var(--faint); padding:6px 0}
 .sync-foot{font-family:var(--font-ui); font-size:11px; color:var(--faint); text-align:center; letter-spacing:.04em; margin-top:2px}
 
