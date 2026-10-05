@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PM Board</title>
-<meta name="theme-color" content="#efe9dc">
+<meta name="theme-color" content="#041236">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
@@ -13,32 +13,36 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,500,0,0&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<script>
-  if (localStorage.getItem("pm_theme") === "jlf") document.documentElement.classList.add("theme-jlf");
-</script>
 </head>
 <body>
 
 <header id="topbar">
   <div class="brand">
     <img src="bm-logo-black.png" alt="Bhakti Marga emblem" class="brand-icon" width="38" height="38">
-    <span class="mark" aria-hidden="true">JLF</span>
     <div class="brand-text">
       <span class="brand-name">PM Board</span>
-      <span class="brand-sub">field logbook · est. 2026</span>
+      <span class="brand-sub">Bhakti Marga Operations</span>
     </div>
   </div>
-  <div class="theme-switch" role="group" aria-label="Which board">
-    <button type="button" id="theme-personal" aria-pressed="true">Personal</button>
-    <button type="button" id="theme-jlf" aria-pressed="false">JLF</button>
-  </div>
+  <button id="btn-people" class="icon-btn" title="People" aria-label="People"><span class="material-symbols-outlined">group</span></button>
+  <button id="btn-add-project" class="icon-btn" title="New project" aria-label="New project"><span class="material-symbols-outlined">add</span></button>
+  <button id="btn-refresh" class="icon-btn" title="Refresh" aria-label="Refresh"><span class="material-symbols-outlined">refresh</span></button>
+</header>
+<nav id="tabbar" aria-label="Main views">
+  <button class="tab" data-view="today" title="Today"><span class="material-symbols-outlined tab-ico">light_mode</span><span>Today</span></button>
+  <button class="tab" data-view="sync" title="Sync"><span class="material-symbols-outlined tab-ico">groups</span><span>Sync</span></button>
+  <button class="tab active" data-view="board" title="Board"><span class="material-symbols-outlined tab-ico">view_kanban</span><span>Board</span></button>
+  <button class="tab" data-view="list" title="Registry"><span class="material-symbols-outlined tab-ico">table</span><span>Registry</span></button>
+  <button class="tab" data-view="timeline" title="Voyage"><span class="material-symbols-outlined tab-ico">view_timeline</span><span>Voyage</span></button>
+  <button class="tab" data-view="charts" title="Ledger"><span class="material-symbols-outlined tab-ico">bar_chart</span><span>Ledger</span></button>
+  <button class="tab" data-view="updates" title="Chat" style="display:none"><span class="material-symbols-outlined tab-ico">forum</span><span>Chat</span></button>
+</nav>
+<div class="filterbar">
   <div id="area-chips" class="area-chips"></div>
   <div id="project-chips" class="project-chips"></div>
-  <button id="btn-people" class="icon-btn" title="People — manage who tasks can be assigned to">☺</button>
-  <button id="btn-add-project" class="icon-btn" title="New project">✚</button>
-  <button id="btn-refresh" class="icon-btn" title="Refresh">⟳</button>
-</header>
+</div>
 
 <main id="main">
 
@@ -95,16 +99,6 @@
   </section>
 
 </main>
-
-<nav id="tabbar" aria-label="Main views">
-  <button class="tab" data-view="today" title="Today — overdue and due now, your daily driver"><span class="tab-ico">☀</span><span>Today</span></button>
-  <button class="tab" data-view="sync" title="Sync — meeting agenda from the live board, Tue/Thu/Sat 9.30"><span class="tab-ico">☏</span><span>Sync</span></button>
-  <button class="tab active" data-view="board" title="Board — kanban of all tasks"><span class="tab-ico">▦</span><span>Board</span></button>
-  <button class="tab" data-view="list" title="Registry — list of every task, quick edit"><span class="tab-ico">☰</span><span>Registry</span></button>
-  <button class="tab" data-view="timeline" title="Voyage — timeline of scheduled tasks"><span class="tab-ico">⏱</span><span>Voyage</span></button>
-  <button class="tab" data-view="charts" title="Ledger — charts and progress"><span class="tab-ico">◔</span><span>Ledger</span></button>
-  <button class="tab" data-view="updates" title="Chat — talk to Fluso, same thread as Telegram" style="display:none"><span class="tab-ico">✎</span><span>Chat</span></button>
-</nav>
 
 <button id="fab" title="New task">+</button>
 

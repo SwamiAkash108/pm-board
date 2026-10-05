@@ -1251,8 +1251,6 @@
     $("#fab").onclick = () => openTaskModal(null);
     $("#btn-people").onclick = openPersonModal;
     $("#btn-add-project").onclick = openProjectModal;
-    $("#theme-personal").onclick = () => setTheme(false);
-    $("#theme-jlf").onclick = () => setTheme(true);
     $("#chat-send").onclick = guard(sendChat);
     $("#chat-input").addEventListener("keydown", (e) => { if (e.key === "Enter") sendChat(); });
     document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
@@ -1288,29 +1286,8 @@
     } catch (e) { /* realtime optional */ }
   }
 
-  function setTheme(jlf) {
-    document.documentElement.classList.toggle("theme-jlf", jlf);
-    localStorage.setItem("pm_theme", jlf ? "jlf" : "personal");
-    const name = $(".brand-name");
-    const sub = $(".brand-sub");
-    if (name) name.textContent = jlf ? "Just Love Festival" : "PM Board";
-    if (sub) sub.textContent = jlf ? "24–29 July 2026 · Springen" : "field logbook · est. 2026";
-    document.title = jlf ? "Just Love Festival" : "PM Board";
-    const loginTitle = $(".login-card h2");
-    const loginSub = $(".login-card .muted");
-    if (loginTitle) loginTitle.textContent = jlf ? "Just Love Festival" : "PM Board";
-    if (loginSub) loginSub.textContent = jlf ? "24–29 July 2026 · Springen" : "field logbook · sign in to your board";
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", jlf ? "#FF7FD4" : "#efe9dc");
-    const personal = $("#theme-personal");
-    const fest = $("#theme-jlf");
-    if (personal) personal.setAttribute("aria-pressed", jlf ? "false" : "true");
-    if (fest) fest.setAttribute("aria-pressed", jlf ? "true" : "false");
-  }
-
   async function boot() {
     bind();
-    setTheme(localStorage.getItem("pm_theme") === "jlf");
     const session = await DB.session();
     if (!session && !DB.demo) {
       $("#login").classList.remove("hidden");
