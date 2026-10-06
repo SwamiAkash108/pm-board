@@ -926,8 +926,10 @@
           const avatars = people.map((pe) => `<span class="avatar" style="background:${pe.color}" title="${escAttr(pe.name)}">${initials(pe.name)}</span>`).join("");
           return `<div class="today-row" data-id="${t.id}">
             <span class="today-due ${cls}">${t.due ? (t.due === today ? "today" : fmtDate(t.due)) : "—"}</span>
-            <span class="today-title">${esc(t.title)}${t.recur ? ` <span class="badge badge-recur">↻</span>` : ""}</span>
-            <span class="today-proj">${p ? `<i style="background:${p.color}"></i>${esc(p.name)}` : ""}</span>
+            <span class="today-main">
+              <span class="today-title">${esc(t.title)}${t.recur ? ` <span class="badge badge-recur">↻</span>` : ""}</span>
+              ${p ? `<span class="today-proj"><i style="background:${p.color}"></i>${esc(p.name)}</span>` : ""}
+            </span>
             <span class="today-stage" style="border-color:${stageColor(t.status, t.project_id)}">${esc(t.status)}</span>
             <span class="today-who">${avatars}</span>
             <button type="button" class="today-complete" data-id="${t.id}">Complete</button>

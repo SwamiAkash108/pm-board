@@ -463,6 +463,7 @@ body {
 .today-due.soon,
 .lc-due.soon { color: #ac4e00; background: transparent; font-weight: 600; }
 .today-due { font-family: var(--font-ui); }
+.today-proj { font-size: 16px; font-weight: 600; color: #1d1d1f; letter-spacing: -0.01em; }
 .today-complete { background: #008009; margin-left: auto; }
 .today-complete:hover { background: #006607; }
 
