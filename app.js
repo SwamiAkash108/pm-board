@@ -711,14 +711,16 @@
     });
     const groups = [];
     sorted.forEach((t) => {
-      const name = (projOf(t) && projOf(t).name) || "No project";
+      const proj = projOf(t);
+      const name = (proj && proj.name) || "No project";
+      const color = (proj && proj.color) || "";
       const last = groups[groups.length - 1];
-      if (!last || last.name !== name) groups.push({ name, items: [t] });
+      if (!last || last.name !== name) groups.push({ name, color, items: [t] });
       else last.items.push(t);
     });
     return groups.map((g) => `
       <div class="sync-group">
-        <h4 class="sync-proj">${esc(g.name)}</h4>
+        <h4 class="sync-proj">${g.color ? `<i style="background:${escAttr(g.color)}"></i>` : ""}${esc(g.name)}</h4>
         ${g.items.map((t) => syncItem(t, why && why(t))).join("")}
       </div>`).join("");
   }

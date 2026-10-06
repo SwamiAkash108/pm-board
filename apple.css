@@ -408,13 +408,24 @@ body {
 .sync-item { padding: 6px 0 2px; }
 
 .sync-group .sync-proj {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
-  color: #6e6e73;
-  margin: 0 0 2px;
+  color: #1d1d1f;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.sync-proj { font-size: 13px; font-weight: 400; color: #6e6e73; letter-spacing: 0; text-transform: none; }
+.sync-group .sync-proj i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sync-proj { letter-spacing: 0; text-transform: none; }
 
 .sync-title { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; }
 
