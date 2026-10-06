@@ -57,15 +57,5 @@ begin
   end;
 end $$;
 
--- 7. exec_sql helper — lets Fluso run future migrations via the API,
---    so you never need to open this SQL editor again.
-create or replace function exec_sql(sql text)
-returns void
-language plpgsql
-security definer
-set search_path = public
-as $$
-begin
-  execute sql;
-end;
-$$;
+-- 7. exec_sql helper: REMOVED 06/10/2026 (security hardening).
+--    Arbitrary-SQL RPC revoked and dropped from the live DB; do not re-add.
