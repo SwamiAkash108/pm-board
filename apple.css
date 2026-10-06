@@ -207,6 +207,12 @@ body {
   box-shadow: none;
   background: #f5f5f7;
   padding: 16px;
+  touch-action: manipulation;
+}
+
+.card:focus-visible {
+  outline: 2px solid #0071e3;
+  outline-offset: 2px;
 }
 
 .card:hover {
@@ -448,6 +454,53 @@ body {
 
 .sync-complete:hover { background: #0077ed; filter: none; }
 
+.badge-due.soon { background: #fff4e8; color: #ac4e00; }
+.badge-due.over,
+.over-days,
+.tl-bar.overdue { background: #e30000; color: #fff; }
+.today-due.over,
+.lc-due.over { color: #e30000; background: transparent; font-weight: 600; }
+.today-due.soon,
+.lc-due.soon { color: #ac4e00; background: transparent; font-weight: 600; }
+.today-due { font-family: var(--font-ui); }
+.today-complete { background: #008009; margin-left: auto; }
+.today-complete:hover { background: #006607; }
+
+.tl-wrap { border: 0; border-radius: 18px; background: #fff; }
+.tl-header { border-bottom: 1px solid #d2d2d7; background: #fff; }
+.tl-day { text-transform: none; letter-spacing: 0; font-size: 12px; font-weight: 500; }
+.tl-day.today { color: #e30000; }
+.tl-label { border-right: 1px solid #d2d2d7; background: #fff; font-weight: 500; }
+.tl-row { border-bottom: 1px solid #f0f0f2; }
+.tl-gridline { border-left: 1px solid #e8e8ed; }
+.tl-gridline.wknd { background: rgba(0, 0, 0, 0.03); }
+.tl-today { border-left: 2px solid #e30000; }
+.tl-bar {
+  border: 0;
+  border-radius: 980px;
+  box-shadow: none;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+  font-size: 12px;
+}
+.tl-group {
+  background: transparent;
+  color: #1d1d1f;
+  border: 0;
+  border-bottom: 1px solid #d2d2d7;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  font-size: 15px;
+}
+.tl-group .gdot { border-color: #1d1d1f; }
+.unscheduled h4 { text-transform: none; letter-spacing: 0; font-weight: 600; }
+
+@media (max-width: 640px) {
+  .today-stage { display: inline-flex; }
+}
+
 @media (max-width: 899px) {
   #tabbar {
     position: fixed;
@@ -461,18 +514,26 @@ body {
     padding-bottom: calc(6px + env(safe-area-inset-bottom));
   }
 
+  #tabbar { overflow: hidden; }
+
   .tab {
     color: #6e6e73;
-    font-size: 11px;
+    font-size: 10px;
+    flex: 1 1 0;
+    min-width: 0;
+    min-height: 44px;
     flex-direction: column;
     background: transparent;
-    margin: 4px 0;
+    margin: 0;
+    padding: 4px 2px;
+    border-bottom: 2px solid transparent;
   }
 
   .tab.active {
     color: #0071e3;
     background: transparent;
     box-shadow: none;
-    font-weight: 500;
+    font-weight: 600;
+    border-bottom-color: #0071e3;
   }
 }

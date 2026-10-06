@@ -120,7 +120,12 @@
     $("#view-today").classList.toggle("active", state.view === "today");
     $("#view-sync").classList.toggle("active", state.view === "sync");
     $("#view-list").classList.toggle("active", state.view === "list");
-    $$(".tab").forEach((t) => t.classList.toggle("active", t.dataset.view === state.view));
+    $$(".tab").forEach((t) => {
+      const on = t.dataset.view === state.view;
+      t.classList.toggle("active", on);
+      if (on) t.setAttribute("aria-current", "page");
+      else t.removeAttribute("aria-current");
+    });
     if (state.view === "board") renderBoard();
     else if (state.view === "timeline") renderTimeline();
     else if (state.view === "charts") renderCharts();
@@ -269,7 +274,14 @@
         ${avatars}
         ${state.activeProject === "all" && p ? `<span class="card-proj">${esc(p.name)}</span>` : ""}
       </div>`;
+    card.setAttribute("role", "button");
+    card.tabIndex = 0;
     card.onclick = () => { if (state._suppressClick) { state._suppressClick = false; return; } openTaskModal(t); };
+    card.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      openTaskModal(t);
+    });
     card.addEventListener("dragstart", (e) => {
       e.dataTransfer.setData("text/plain", t.id);
       e.dataTransfer.effectAllowed = "move";
@@ -319,7 +331,7 @@
         assignees: task.assignees || [],
         assignee_id: (task.assignees || [])[0] || null,
         recur: task.recur,
-        notes: task.notes || null,
+        notes: task.notes || "",
       };
       const created = await DB.addTask(clone);
       if (created && !state.tasks.some((x) => x.id === created.id)) state.tasks.push(created);
@@ -918,6 +930,7 @@
             <span class="today-proj">${p ? `<i style="background:${p.color}"></i>${esc(p.name)}` : ""}</span>
             <span class="today-stage" style="border-color:${stageColor(t.status, t.project_id)}">${esc(t.status)}</span>
             <span class="today-who">${avatars}</span>
+            <button type="button" class="today-complete" data-id="${t.id}">Complete</button>
           </div>`;
         }).join("") : `<div class="empty-hint">${empty}</div>`}
       </div>`;
@@ -942,9 +955,23 @@
       renderToday();
     }));
 
-    $$(".today-row", wrap).forEach((row) => row.addEventListener("click", () => {
-      const t = byId(state.tasks, row.dataset.id);
-      if (t) openTaskModal(t);
+    $$(".today-row", wrap).forEach((row) => {
+      const open = () => {
+        const t = byId(state.tasks, row.dataset.id);
+        if (t) openTaskModal(t);
+      };
+      row.addEventListener("click", (e) => {
+        if (e.target.closest(".today-complete")) return;
+        open();
+      });
+    });
+    $$(".today-complete", wrap).forEach((btn) => btn.addEventListener("click", async (e) => {
+      e.stopPropagation();
+      const t = byId(state.tasks, btn.dataset.id);
+      if (!t || btn.disabled) return;
+      btn.disabled = true;
+      await setTaskStatus(t, doneStageName(t));
+      renderToday();
     }));
   }
 
@@ -1159,10 +1186,20 @@
       if (!patch.title) { $("#m-title", back).focus(); return; }
       if (isNew) {
         const created = await DB.addTask(patch);
-        if (!state.tasks.some((x) => x.id === created.id)) state.tasks.push(created);
+        if (created && !state.tasks.some((x) => x.id === created.id)) state.tasks.push(created);
+        if (created && isDoneStage(created.status) && created.recur) {
+          const finished = created.status;
+          created.status = firstStage(created.project_id);
+          await setTaskStatus(created, finished);
+        }
       } else {
-        Object.assign(t, patch);
-        await DB.updateTask(t.id, patch);
+        const nextStatus = patch.status;
+        const statusChanged = String(t.status).toLowerCase() !== String(nextStatus).toLowerCase();
+        const fields = { ...patch };
+        delete fields.status;
+        Object.assign(t, fields);
+        await DB.updateTask(t.id, fields);
+        if (statusChanged) await setTaskStatus(t, nextStatus);
       }
       closeModal(); render();
     });
